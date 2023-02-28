@@ -2,7 +2,11 @@ import { createContext, useMemo, useState } from "react";
 
 
 
-const AuthContext = createContext({}); // Create a context
+type Auth = {
+  setAuth?: (auth: {user?: string, pwd?: string, accessToken?: string, roles?: string[]}) => void;
+}
+
+const AuthContext = createContext<Auth>({}); // Create a context
 
 type Props = {
   children: JSX.Element | JSX.Element[];

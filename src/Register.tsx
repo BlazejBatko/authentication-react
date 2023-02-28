@@ -7,11 +7,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Register.css";
 import axios from "./api/axios";
+import { Link } from "react-router-dom";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z-0-9_]{3,23}$/; // 4-24 characters, no spaces, no special characters, no numbers as first character
-const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/; // 8-24 characters, at least one lowercase, one uppercase, one number, one special character
+const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%]).{8,24}$/; // 8-24 characters, at least one lowercase, one uppercase, one number, one special character
 const REGISTER_URL = "/register";
-// type Props = {};
+
 
 function Register() {
   const userRef = useRef<HTMLInputElement>(null);
@@ -30,7 +31,6 @@ function Register() {
   const [matchFocus, setMatchFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current!.focus();
@@ -38,15 +38,13 @@ function Register() {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log("regex user: " + result);
-    console.log("user: " + user);
+
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = PASS_REGEX.test(pass);
-    console.log("regex pass:" + result);
-    console.log("pass: " + pass);
+
     setValidPass(result);
     const match = pass === matchPass;
     setValidMatch(match);
@@ -66,7 +64,7 @@ function Register() {
       return;
     }
     try {
-      const response = await axios.post(
+      await axios.post(
         REGISTER_URL,
         JSON.stringify({ user: user, pwd: pass }),
         {
@@ -76,11 +74,6 @@ function Register() {
           },
         }
       );
-
-      console.log(response.data);
-      // console.log(response.accessToken);
-      console.log(JSON.stringify(response));
-      setSuccess(true);
 
       //clear input fields;
     } catch (error: any) {
@@ -212,8 +205,7 @@ function Register() {
         <p>
           Already registered? <br />
           <span className="line">
-            {/* {router link here} */}
-            <a href="/login"> Sign In</a>
+            <Link to="/login">Sign in</Link>
           </span>
         </p>
       </section>

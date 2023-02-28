@@ -1,11 +1,12 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
 
-type Props = {};
-import axios from "./api/axios";
 
-function Login({}: Props) {
-  const { setAuth } = useContext(AuthContext);
+import axios from "./api/axios";
+import { Link } from "react-router-dom";
+
+function Login() {
+  const {setAuth} = useContext(AuthContext);
 
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLInputElement>(null);
@@ -43,9 +44,9 @@ function Login({}: Props) {
 
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      setAuth({ user, pwd: pass, roles, accessToken });
-      // window.location.href = "/home";
-    } catch (err) {
+      setAuth!({ user, pwd: pass, roles, accessToken });
+
+    } catch (err: any) {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
@@ -96,8 +97,7 @@ function Login({}: Props) {
         <p>
           Need an Account? <br />
           <span className="line">
-            {/* put router link here */}
-            <a href="/register">Register</a>
+            <Link to="/register">Sign up</Link>
           </span>
         </p>
       </section>
