@@ -1,12 +1,16 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import { AuthContext } from "./context/AuthProvider";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "./hooks/useAuth";
 
 
 import axios from "./api/axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Login() {
-  const {setAuth} = useContext(AuthContext);
+  const {setAuth} = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLInputElement>(null);
@@ -45,7 +49,9 @@ function Login() {
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
       setAuth!({ user, pwd: pass, roles, accessToken });
-
+      setUser('');
+      setPass('');
+      navigate(from, { replace: true });
     } catch (err: any) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -81,6 +87,7 @@ function Login() {
             onChange={(e) => setUser(e.target.value)}
             value={user}
             required
+          
           />
           <label htmlFor="password">Username</label>
           <input

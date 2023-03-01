@@ -1,11 +1,17 @@
-import React from 'react'
-
-
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Lounge() {
   return (
-    <div>Lounge</div>
-  )
+    <section>
+      <h1>The Lounge</h1>
+      <br />
+      <p>Admins and Editors can hang out here.</p>
+      <div className="flexGrow">
+        <Link to="/">Home</Link>
+      </div>
+    </section>
+  );
 }
 
-export default Lounge
+export default Lounge;

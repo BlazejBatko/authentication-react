@@ -1,4 +1,3 @@
-import "./App.css";
 import Register from "./Register";
 import { Route, Routes } from "react-router-dom";
 import "@fontsource/advent-pro";
@@ -13,6 +12,13 @@ import Editor from "./Editor";
 import Admin from "./Admin";
 import Lounge from "./Lounge";
 import NotFound from "./NotFound";
+import RequireAuth from "./RequireAuth";
+
+const ROLES = {
+  User: 2001,
+  Editor: 1984,
+  Admin: 5150,
+};
 
 function App() {
   return (
@@ -25,10 +31,29 @@ function App() {
         <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* we want to protect these routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/editor" element={<Editor />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/lounge" element={<Lounge />} />
+        <Route
+          element={
+            <RequireAuth
+              allowedRoles={[ROLES.User, ROLES.Admin, ROLES.Editor]}
+            />
+          }
+        >
+          {/* RequireAuth is a wrapper component that checks if the user is logged in. If not, it redirects to the login page. */}
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route
+          element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
+        >
+          <Route path="/editor" element={<Editor />} />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+          <Route path="/admin" element={<Admin />} />
+        </Route>
+        <Route
+          element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
+        >
+          <Route path="/lounge" element={<Lounge />} />
+        </Route>
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

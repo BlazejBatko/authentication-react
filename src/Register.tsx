@@ -13,7 +13,6 @@ const USER_REGEX = /^[a-zA-Z][a-zA-Z-0-9_]{3,23}$/; // 4-24 characters, no space
 const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%]).{8,24}$/; // 8-24 characters, at least one lowercase, one uppercase, one number, one special character
 const REGISTER_URL = "/register";
 
-
 function Register() {
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
@@ -74,6 +73,8 @@ function Register() {
           },
         }
       );
+
+      setErrMsg("Registration Successful");
 
       //clear input fields;
     } catch (error: any) {
