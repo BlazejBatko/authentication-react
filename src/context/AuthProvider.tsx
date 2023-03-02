@@ -1,12 +1,26 @@
 import { createContext, useMemo, useState } from "react";
-
 type Auth = {
-  setAuth?: (auth: {
-    user?: string;
-    pwd?: string;
-    accessToken?: string;
-    roles?: number[];
-  }) => void;
+  setAuth?: (
+    auth:
+      | {
+          user?: string;
+          pwd?: string;
+          accessToken?: string;
+          roles?: number[];
+        }
+      | ((prev: {
+          user?: string;
+          pwd?: string;
+          accessToken?: string;
+          roles?: number[];
+        }) => {
+          user?: string;
+          pwd?: string;
+          accessToken?: string;
+          roles?: number[];
+        })
+  ) => void | undefined;
+
   auth?: {
     user?: string;
     pwd?: string;

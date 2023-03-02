@@ -1,18 +1,18 @@
-import Register from "./Register";
 import { Route, Routes } from "react-router-dom";
 import "@fontsource/advent-pro";
 import "@fontsource/titan-one";
-import "./Register.css";
-import Login from "./Login";
-import Home from "./Home";
-import Layout from "./Layout";
-import LinkPage from "./LinkPage";
-import Unauthorized from "./Unauthorized";
-import Editor from "./Editor";
-import Admin from "./Admin";
-import Lounge from "./Lounge";
-import NotFound from "./NotFound";
-import RequireAuth from "./RequireAuth";
+import "./components/Register.css";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Layout from "./components/Layout";
+import LinkPage from "./components/LinkPage";
+import Unauthorized from "./components/Unauthorized";
+import Editor from "./components/Editor";
+import Admin from "./components/Admin";
+import Lounge from "./components/Lounge";
+import NotFound from "./components/NotFound";
+import RequireAuth from "./components/RequireAuth";
 
 const ROLES = {
   User: 2001,
