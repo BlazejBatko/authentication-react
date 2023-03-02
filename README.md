@@ -11,7 +11,7 @@
 > ## GOAL
 
 
- **goal** of this project is to create **good practices**, react, authentication code reference that can be used in future projects.
+**goal** of this project is to create **good practices**, react, authentication code reference that can be used in future projects.
 
 > ## SHOWCASE
 
@@ -48,5 +48,5 @@ space for url
 
 > ## CREDITS
 
-> Project was created during [React Login, Registration and Authentication](https://www.youtube.com/playlist?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd) Course ❤️
+Project was created during [React Login, Registration and Authentication](https://www.youtube.com/playlist?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd) Course ❤️
 
