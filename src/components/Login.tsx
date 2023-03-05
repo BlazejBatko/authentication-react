@@ -4,8 +4,11 @@ import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
+import useInput from "../hooks/useInput";
+import useToggle from "../hooks/useToggle";
+
 function Login() {
-  const { setAuth, persist, setPersist } = useAuth();
+  const { setAuth} = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,10 +17,10 @@ function Login() {
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLInputElement>(null);
 
-  const [user, setUser] = useState("");
+  const [user, resetUser, userAttribs] = useInput('user', '');
   const [pass, setPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
-
+  const [check, toggleCheck] = useToggle('persist', false)
   const LOGIN_URL = "/auth";
   useEffect(() => {
     userRef.current?.focus();
@@ -41,14 +44,13 @@ function Login() {
         }
       );
       console.log(JSON.stringify(response?.data));
-      // console.log(JSON.stringify(response?.data))
-      setUser("");
+
+      resetUser();
       setPass("");
 
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
       setAuth!({ user, pwd: pass, roles, accessToken });
-      setUser("");
       setPass("");
       navigate(from, { replace: true });
     } catch (err: any) {
@@ -65,13 +67,7 @@ function Login() {
     errRef.current?.focus(); // focus on error message for screen readers
   };
 
-  const togglePersist = () => {
-    setPersist!((prev) => !prev); // toggle persist
-  };
 
-  useEffect(() => {
-    localStorage.setItem("persist", persist);
-  }, [persist]);
 
   return (
     <div className="App">
@@ -91,11 +87,10 @@ function Login() {
             id="username"
             ref={userRef}
             autoComplete="off"
-            onChange={(e) => setUser(e.target.value)}
-            value={user}
+            {...userAttribs}
             required
           />
-          <label htmlFor="password">Username</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -109,8 +104,8 @@ function Login() {
             <input
               type="checkbox"
               id="persist"
-              onChange={togglePersist}
-              checked={persist}
+              onChange={toggleCheck}
+              checked={check}
             />
             <label htmlFor="persist">Trust this Device</label>
           </div>

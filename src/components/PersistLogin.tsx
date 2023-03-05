@@ -3,14 +3,15 @@ import { useState, useEffect } from "react";
 
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
 
-type Props = {};
 
-function PersistLogin({}: Props) {
+function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
 
-  const { auth, persist } = useAuth();
+  const { auth } = useAuth();
+  const [persist] = useLocalStorage('persist', false);
 
   useEffect(() => {
     let isMounted = true;
@@ -21,7 +22,7 @@ function PersistLogin({}: Props) {
       } catch (e) {
         console.log(e);
       } finally {
-        isMounted && setIsLoading(false); // no matter what, set isLoading to fals
+        isMounted && setIsLoading(false); // no matter what, set isLoading to false
       }
     };
 

@@ -3,9 +3,7 @@ import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
 
-type Props = {};
-
-function useAxiosPrivate({}: Props) {
+function useAxiosPrivate() {
   const refresh = useRefreshToken();
   const { auth } = useAuth();
 
