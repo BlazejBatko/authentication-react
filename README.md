@@ -16,7 +16,9 @@
 **goal** of this project is to create **good practices**, react, authentication code reference that can be used in future projects.
 
 > ## SHOWCASE
+
 https://user-images.githubusercontent.com/61236659/222983344-4d4f6ff4-fec3-452b-9bbf-0134161640de.mp4
+
 > ### DEMO INSTALLATION
 
 1. clone this repo url
