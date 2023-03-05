@@ -6,7 +6,7 @@ type Props = {};
 
 function Users({}: Props) {
   const [users, setUsers] = useState([]);
-  const axiosPrivate = useAxiosPrivate({});
+  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,7 +20,9 @@ function Users({}: Props) {
           signal: controller.signal,
         });
         console.log(response.data);
-        isMounted && setUsers(response.data); // Only update the state if the component is mounted
+        const userNames = response.data.map((user: any )=> user.username)
+        isMounted && setUsers(userNames); // Only update the state if the component is mounted
+        console.log(userNames)
       } catch (e) {
         console.log(e);
         navigate('/login', {state: {from: location}, replace: true});
@@ -32,7 +34,7 @@ function Users({}: Props) {
     return () => {
       // This is the cleanup function
       isMounted = false; // Set the flag to false when the component is unmounted
-      controller.abort(); // Abort the request if the component is unmounted
+      // controller.abort(); // Abort the request if the component is unmounted
     };
   }, []);
 
@@ -42,7 +44,7 @@ function Users({}: Props) {
       {users?.length > 0 ? (
         <ul>
           {users.map((user: any, index) => (
-            <li key={index}>{user?.username}</li>
+            <li key={index}>{user}</li>
           ))}
         </ul>
       ) : (
