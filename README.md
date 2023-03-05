@@ -7,6 +7,8 @@
 3. Protected Routes (with react-router-v6) that are dependent on logged user roles (for example only user with admin role can view admin component)
 4. Providing secure access to protected resources (Users component in this exact example) using JSON Web Tokens. 
 5. Fetching data with axios interceptors
+6. Persistent user login (remember this device functionality - user being logged out after refresh token expires)
+7. Form and toggle input saved in local storage (custom hooks)
 
 > ## GOAL
 
@@ -14,9 +16,7 @@
 **goal** of this project is to create **good practices**, react, authentication code reference that can be used in future projects.
 
 > ## SHOWCASE
-
-space for url
-
+https://user-images.githubusercontent.com/61236659/222983344-4d4f6ff4-fec3-452b-9bbf-0134161640de.mp4
 > ### DEMO INSTALLATION
 
 1. clone this repo url
