@@ -1,4 +1,4 @@
-# authentication-react
+# authentication-react-ts
 
 > ## **FEATURES**
 
