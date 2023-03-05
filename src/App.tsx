@@ -13,6 +13,7 @@ import Admin from "./components/Admin";
 import Lounge from "./components/Lounge";
 import NotFound from "./components/NotFound";
 import RequireAuth from "./components/RequireAuth";
+import PersistLogin from "./components/PersistLogin";
 
 const ROLES = {
   User: 2001,
@@ -31,32 +32,34 @@ function App() {
         <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* we want to protect these routes */}
-        <Route
-          element={
-            <RequireAuth
-              allowedRoles={[ROLES.User, ROLES.Admin, ROLES.Editor]}
-            />
-          }
-        >
-          {/* RequireAuth is a wrapper component that checks if the user is logged in. If not, it redirects to the login page. */}
-          <Route path="/" element={<Home />} />
+        <Route element={<PersistLogin />}>
+          {/* PersistLogin is a wrapper component that checks if the user has a valid refresh token. If not, it redirects to the login page. */}
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[ROLES.User, ROLES.Admin, ROLES.Editor]}
+              />
+            }
+          >
+            {/* RequireAuth is a wrapper component that checks if the user is logged in. If not, it redirects to the login page. */}
+            <Route path="/" element={<Home />} />
+          </Route>
+          <Route
+            element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
+          >
+            <Route path="/editor" element={<Editor />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+            <Route path="/admin" element={<Admin />} />
+          </Route>
+          <Route
+            element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
+          >
+            <Route path="/lounge" element={<Lounge />} />
+          </Route>
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
         </Route>
-        <Route
-          element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
-        >
-          <Route path="/editor" element={<Editor />} />
-        </Route>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-          <Route path="/admin" element={<Admin />} />
-        </Route>
-        <Route
-          element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
-        >
-          <Route path="/lounge" element={<Lounge />} />
-        </Route>
-
-        {/* 404 */}
-        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

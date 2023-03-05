@@ -15,8 +15,6 @@ body {
   font-family: "Titan One", cursive;
   min-height: 100vh;
   background-color: var(--background-color);
-  
-
 }
 
 .App {
@@ -120,4 +118,29 @@ button {
 
 .line {
   display: inline-block;
+}
+
+.flexGrow {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.persistCheck {
+  font-size: 0.75rem;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.persistCheck label {
+  margin: 0;
+}
+
+[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+  margin: 0 5px 2px 2px;
 }

@@ -15,7 +15,6 @@ function Users({}: Props) {
     const controller = new AbortController(); // Create an AbortController instance to cancel the request if the component is unmounted
 
     const getUsers = async () => {
-      console.log("xD");
       try {
         const response = await axiosPrivate.get("/users", {
           signal: controller.signal,

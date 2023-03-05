@@ -1,12 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 
-
 import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Login() {
-  const {setAuth} = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,8 +48,8 @@ function Login() {
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
       setAuth!({ user, pwd: pass, roles, accessToken });
-      setUser('');
-      setPass('');
+      setUser("");
+      setPass("");
       navigate(from, { replace: true });
     } catch (err: any) {
       if (!err?.response) {
@@ -65,6 +64,14 @@ function Login() {
     }
     errRef.current?.focus(); // focus on error message for screen readers
   };
+
+  const togglePersist = () => {
+    setPersist!((prev) => !prev); // toggle persist
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   return (
     <div className="App">
@@ -87,7 +94,6 @@ function Login() {
             onChange={(e) => setUser(e.target.value)}
             value={user}
             required
-          
           />
           <label htmlFor="password">Username</label>
           <input
@@ -99,6 +105,15 @@ function Login() {
             required
           />
 
+          <div className="persistCheck">
+            <input
+              type="checkbox"
+              id="persist"
+              onChange={togglePersist}
+              checked={persist}
+            />
+            <label htmlFor="persist">Trust this Device</label>
+          </div>
           <button type="submit">Sign in</button>
         </form>
         <p>

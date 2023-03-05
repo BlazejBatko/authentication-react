@@ -27,6 +27,8 @@ type Auth = {
     accessToken?: string;
     roles?: number[];
   };
+  persist?: boolean;
+  setPersist?: (persist: (prev: boolean) => boolean)=> void;
 };
 
 const AuthContext = createContext<Auth>({}); // Create a context
@@ -37,7 +39,15 @@ type Props = {
 
 export const AuthProvider = ({ children }: Props) => {
   const [auth, setAuth] = useState({});
-  const contextValue = useMemo(() => ({ auth, setAuth }), [auth, setAuth]); // Memoize the context value
+  const persistLS = localStorage.getItem("persist");
+
+  const [persist, setPersist] = useState(
+    persistLS !== null ? JSON.parse(persistLS) : false
+  );
+  const contextValue = useMemo(
+    () => ({ auth, setAuth, persist, setPersist }),
+    [auth, setAuth, persist, setPersist]
+  ); // Memoize the context value
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
